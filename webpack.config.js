@@ -33,11 +33,11 @@ const commonConfig = merge([
       })
     ]
   },
-  parts.lintJavaScript({ include: PATHS.app }),
-  parts.loadCSS({ exclude: PATHS.modules })
+  parts.lintJavaScript({ include: PATHS.app })
 ]);
 
 const productionConfig = merge([
+  parts.extractCSS({ use: 'css-loader' })
 ]);
 
 const developmentConfig = merge([
@@ -45,7 +45,8 @@ const developmentConfig = merge([
     // Customize host/port here if needed
     host: HOST,
     port: PORT
-  })
+  }),
+  parts.loadCSS({ exclude: PATHS.modules })
 ]);
 
 module.exports = (env) => {
