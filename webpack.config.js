@@ -8,7 +8,8 @@ const HOST = (process.env.HOST || 'localhost');
 const PORT = (process.env.PORT || 8080);
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'build')
+  build: path.join(__dirname, 'build'),
+  modules: path.join(__dirname, 'node_modules')
 };
 
 const commonConfig = merge([
@@ -32,7 +33,8 @@ const commonConfig = merge([
       })
     ]
   },
-  parts.lintJavaScript({ include: PATHS.app })
+  parts.lintJavaScript({ include: PATHS.app }),
+  parts.loadCSS({ exclude: PATHS.modules })
 ]);
 
 const productionConfig = merge([

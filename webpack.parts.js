@@ -26,3 +26,32 @@ exports.lintJavaScript = ({ include, exclude, options }) => ({
     ]
   }
 });
+
+exports.loadCSS = ({ include, exclude } = {}) => ({
+  module: {
+    rules: [
+      {
+        test: /\.(css|scss)$/,
+        include,
+        exclude,
+
+        use: ['style-loader', {
+          loader: 'css-loader', options: {
+            sourceMap: true
+          }}, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => ([
+              require('autoprefixer'),
+              require('precss')
+            ]),
+            sourceMap: true
+          }}, {
+          loader: 'sass-loader', options: {
+            sourceMap: true
+          }
+        }]
+      }
+    ]
+  }
+});
