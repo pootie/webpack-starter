@@ -2,7 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
-
+const HOST = (process.env.HOST || 'localhost');
+const PORT = (process.env.PORT || 8080);
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build')
@@ -19,11 +20,26 @@ const commonConfig = {
     path: PATHS.build,
     filename: '[name].js'
   },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true
+        }
+      }
+    ]
+  },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Webpack starter'
     }),
-    new FriendlyErrorsWebpackPlugin()
+    new FriendlyErrorsWebpackPlugin({
+      clearConsole: false
+    })
   ]
 };
 
@@ -47,8 +63,13 @@ const developmentConfig = () => {
       //
       // 0.0.0.0 is available to all network devices
       // unlike default `localhost`.
-      host: process.env.HOST, // Defaults to `localhost`
-      port: process.env.PORT  // Defaults to 8080
+      host: HOST, // Defaults to `localhost`
+      port: PORT,  // Defaults to 8080
+      // overlay: true is equivalent
+      overlay: {
+        errors: true,
+        warnings: true
+      }
     }
   };
 
