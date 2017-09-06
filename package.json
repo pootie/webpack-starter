@@ -8,6 +8,7 @@
     "start:watch": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
     "build": "webpack --env production",
     "build:verbose": "webpack --display-used-exports --env production",
+    "stats": "webpack --env production --profile --json > stats.json",
     "lint:js": "eslint app/ webpack.*.js --cache",
     "lint:css": "stylelint app/**/*.css"
   },
@@ -51,7 +52,8 @@
     "url-loader": "^0.5.9",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

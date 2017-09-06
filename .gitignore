@@ -32,3 +32,5 @@ builds
 build
 
 .eslintcache
+stats.json
+stats.html

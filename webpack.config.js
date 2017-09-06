@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const Visualizer = require('webpack-visualizer-plugin');
 const glob = require('glob');
 const merge = require('webpack-merge');
 const parts = require('./webpack.parts');
@@ -59,6 +60,9 @@ const productionConfig = merge([
       filename: '[name].[chunkhash:8].js'
     },
     plugins: [
+      new Visualizer({
+        filename: '../stats.html'
+      }),
       new webpack.HashedModuleIdsPlugin()
     ]
   },
