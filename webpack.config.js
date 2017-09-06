@@ -47,6 +47,7 @@ const commonConfig = merge([
 ]);
 
 const productionConfig = merge([
+  parts.clean(PATHS.build),
   parts.extractCSS({ use: ['css-loader', parts.autoprefix()] }),
   parts.purifyCSS({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true })
@@ -58,7 +59,8 @@ const productionConfig = merge([
     }
   }),
   parts.minifyImages(),
-  parts.generateSourceMaps({ type: 'source-map' })
+  parts.generateSourceMaps({ type: 'source-map' }),
+  parts.attachRevision()
 ]);
 
 const developmentConfig = merge([
