@@ -55,6 +55,10 @@ const productionConfig = merge([
     }
   },
   parts.clean(PATHS.build),
+  parts.setFreeVariable(
+    'process.env.NODE_ENV',
+    'production'
+  ),
   parts.minifyJavaScript(),
   parts.minifyCSS({
     options: {
