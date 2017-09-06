@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const glob = require('glob');
 const merge = require('webpack-merge');
 const parts = require('./webpack.parts');
 
@@ -37,7 +38,10 @@ const commonConfig = merge([
 ]);
 
 const productionConfig = merge([
-  parts.extractCSS({ use: ['css-loader', parts.autoprefix()] })
+  parts.extractCSS({ use: ['css-loader', parts.autoprefix()] }),
+  parts.purifyCSS({
+    paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true })
+  })
 ]);
 
 const developmentConfig = merge([
@@ -46,7 +50,7 @@ const developmentConfig = merge([
     host: HOST,
     port: PORT
   }),
-  parts.loadCSS({ exclude: PATHS.modules })
+  parts.loadCSS()
 ]);
 
 module.exports = (env) => {
