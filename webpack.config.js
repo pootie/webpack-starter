@@ -59,14 +59,24 @@ const productionConfig = merge([
       filename: '[name].[chunkhash:8].js'
     },
     plugins: [
-      new webpack.HashedModuleIdsPlugin(),
+      new webpack.HashedModuleIdsPlugin()      
     ]
   },
   parts.clean(PATHS.build),
   parts.setFreeVariable(
     'process.env.NODE_ENV',
     'production'
-  ),  
+  ),
+  parts.extractBundles([
+    {
+      name: 'vendor',
+      minChunks: ({ resource }) => (
+        resource &&
+        resource.indexOf('node_modules') >= 0 &&
+        resource.match(/\.js$/)
+      )
+    }
+  ]),
   parts.minifyJavaScript(),
   parts.minifyCSS({
     options: {

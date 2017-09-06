@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --env development",
     "start:watch": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
     "build": "webpack --env production",
-    "build:verbose": "webpack --display-used-exports --env production",    
+    "build:verbose": "webpack --display-used-exports --env production",
     "lint:js": "eslint app/ webpack.*.js --cache",
     "lint:css": "stylelint app/**/*.css"
   },
@@ -56,6 +56,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "font-awesome": "^4.7.0",
-    "purecss": "^1.0.0"
+    "purecss": "^1.0.0",
+    "vue": "^2.4.2"
   }
 }

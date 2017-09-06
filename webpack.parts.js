@@ -234,3 +234,9 @@ exports.setFreeVariable = (key, value) => {
     ]
   };
 };
+
+exports.extractBundles = (bundles) => ({
+  plugins: bundles.map((bundle) => (
+    new webpack.optimize.CommonsChunkPlugin(bundle)
+  ))
+});
