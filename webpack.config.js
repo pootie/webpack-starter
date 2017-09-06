@@ -57,10 +57,17 @@ const productionConfig = merge([
       name: '[name].[ext]'
     }
   }),
-  parts.minifyImages()
+  parts.minifyImages(),
+  parts.generateSourceMaps({ type: 'source-map' })
 ]);
 
 const developmentConfig = merge([
+  {
+    output: {
+      devtoolModuleFilenameTemplate: 'webpack:///[absolute-resource-path]'
+    }
+  },
+  parts.generateSourceMaps({ type: 'cheap-module-eval-source-map' }),
   parts.devServer({
     // Customize host/port here if needed
     host: HOST,
