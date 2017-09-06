@@ -34,7 +34,8 @@ const commonConfig = merge([
       })
     ]
   },
-  parts.lintJavaScript({ include: PATHS.app })
+  parts.lintJavaScript({ include: PATHS.app }),
+  parts.lintCSS({ include: PATHS.app })
 ]);
 
 const productionConfig = merge([

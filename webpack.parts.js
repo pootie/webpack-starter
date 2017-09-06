@@ -31,6 +31,26 @@ exports.lintJavaScript = ({ include, exclude, options }) => ({
   }
 });
 
+exports.lintCSS = ({ include, exclude }) => ({
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        include,
+        exclude,
+        enforce: 'pre',
+
+        loader: 'postcss-loader',
+        options: {
+          plugins: () => ([
+            require('stylelint')()
+          ])
+        }
+      }
+    ]
+  }
+});
+
 exports.loadCSS = ({ include, exclude } = {}) => ({
   module: {
     rules: [
