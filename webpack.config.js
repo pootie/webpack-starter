@@ -31,7 +31,9 @@ const commonConfig = merge([
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'Webpack starter'
+        filename: 'index.html',
+        template: 'index.html',
+        inject: true
       }),
       new FriendlyErrorsWebpackPlugin({
         clearConsole: false
@@ -60,6 +62,23 @@ const productionConfig = merge([
       filename: '[name].[chunkhash:8].js'
     },
     plugins: [
+      // generate dist index.html with correct asset hash for caching.
+      // you can customize output by editing /index.html
+      // see https://github.com/ampedandwired/html-webpack-plugin
+      new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: 'index.html',
+        inject: true,
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeAttributeQuotes: true
+          // more options:
+          // https://github.com/kangax/html-minifier#options-quick-reference
+        },
+        // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+        chunksSortMode: 'dependency'
+      }),
       new Visualizer({
         filename: '../stats.html'
       }),
