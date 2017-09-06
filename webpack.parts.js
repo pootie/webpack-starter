@@ -1,6 +1,7 @@
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 exports.devServer = ({ host, port } = {}) => ({
   devServer: {
@@ -116,4 +117,69 @@ exports.purifyCSS = ({ paths }) => ({
   plugins: [
     new PurifyCSSPlugin({ paths })
   ]
+});
+
+exports.loadImages = ({ include, exclude, options } = {}) => ({
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|svg)$/,
+        include,
+        exclude,
+
+        use: {
+          loader: 'url-loader',
+          options
+        }
+      }
+    ]
+  }
+});
+
+exports.minifyImages = () => ({
+  plugins: [
+    new ImageminPlugin({
+      test: /\.(jpe?g|png|gif|svg)$/i
+    })
+  ]
+});
+
+exports.loadFonts = ({ include, exclude, options } = {}) => ({
+  module: {
+    rules: [
+      {
+        // Capture eot, ttf, woff, and woff2
+        test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        include,
+        exclude,
+
+        use: {
+          loader: 'file-loader',
+          options
+        }
+      }
+    ]
+  }
+});
+
+exports.loadJavaScript = ({ include, exclude }) => ({
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include,
+        exclude,
+
+        loader: 'babel-loader',
+        options: {
+          // Enable caching for improved performance during
+          // development.
+          // It uses default OS directory by default. If you need
+          // something more custom, pass a path to it.
+          // I.e., { cacheDirectory: '<path>' }
+          cacheDirectory: true
+        }
+      }
+    ]
+  }
 });

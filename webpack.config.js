@@ -19,11 +19,13 @@ const commonConfig = merge([
     // convention by default so if a directory contains *index.js*,
     // it resolves to that.
     entry: {
-      app: PATHS.app
+      // app: ['babel-polyfill', PATHS.app]
+      app: [PATHS.app]
     },
     output: {
       path: PATHS.build,
-      filename: '[name].js'
+      filename: '[name].js',
+      publicPath: '/'
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -35,14 +37,27 @@ const commonConfig = merge([
     ]
   },
   parts.lintJavaScript({ include: PATHS.app }),
-  parts.lintCSS({ include: PATHS.app })
+  parts.lintCSS({ include: PATHS.app }),
+  parts.loadFonts({
+    options: {
+      name: '[name].[ext]'
+    }
+  }),
+  parts.loadJavaScript({ include: PATHS.app })
 ]);
 
 const productionConfig = merge([
   parts.extractCSS({ use: ['css-loader', parts.autoprefix()] }),
   parts.purifyCSS({
     paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true })
-  })
+  }),
+  parts.loadImages({
+    options: {
+      limit: 15000,
+      name: '[name].[ext]'
+    }
+  }),
+  parts.minifyImages()
 ]);
 
 const developmentConfig = merge([
@@ -51,7 +66,8 @@ const developmentConfig = merge([
     host: HOST,
     port: PORT
   }),
-  parts.loadCSS()
+  parts.loadCSS(),
+  parts.loadImages()
 ]);
 
 module.exports = (env) => {

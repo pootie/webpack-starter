@@ -1,0 +1,14 @@
+{
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false,
+          "useBuiltIns": false, // polyfill support
+          "targets": {
+            "browsers": ["last 2 Chrome versions"]
+          }
+        }
+      ]
+    ]
+  }
