@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --env development",
     "start:watch": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
     "build": "webpack --env production",
+    "build:verbose": "webpack --display-used-exports --env production",    
     "lint:js": "eslint app/ webpack.*.js --cache",
     "lint:css": "stylelint app/**/*.css"
   },
