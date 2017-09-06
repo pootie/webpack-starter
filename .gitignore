@@ -31,6 +31,8 @@ workspace
 builds
 build
 
+.nyc_output
+coverage/
 .eslintcache
 stats.json
 stats.html

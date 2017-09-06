@@ -1,14 +1,30 @@
 {
-    "presets": [
-      [
-        "env",
-        {
-          "modules": false,
-          "useBuiltIns": false, // polyfill support
-          "targets": {
-            "browsers": ["last 2 Chrome versions"]
-          }
+  "presets": ["es2015",
+    [
+      "env",
+      {
+        "modules": false,
+        "useBuiltIns": false, // polyfill support
+        "targets": {
+          "browsers": ["last 2 Chrome versions"]
+        },
+        "karma": {
+          "plugins": [
+            [
+              "istanbul",
+              { "exclude": ["tests/*.test.js"] }
+            ]
+          ]
+        },
+        "test": {
+          "plugins": [
+            [
+              "istanbul",
+              { "exclude": ["tests/*.test.js"] }
+            ]
+          ]
         }
-      ]
+      }
     ]
-  }
+  ]
+}
