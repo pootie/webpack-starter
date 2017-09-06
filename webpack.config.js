@@ -59,7 +59,7 @@ const productionConfig = merge([
       filename: '[name].[chunkhash:8].js'
     },
     plugins: [
-      new webpack.HashedModuleIdsPlugin()      
+      new webpack.HashedModuleIdsPlugin()
     ]
   },
   parts.clean(PATHS.build),
@@ -75,6 +75,10 @@ const productionConfig = merge([
         resource.indexOf('node_modules') >= 0 &&
         resource.match(/\.js$/)
       )
+    },
+    {
+      name: 'manifest',
+      minChunks: Infinity
     }
   ]),
   parts.minifyJavaScript(),
