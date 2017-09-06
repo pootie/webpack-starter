@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const glob = require('glob');
@@ -40,7 +41,7 @@ const commonConfig = merge([
   parts.lintCSS({ include: PATHS.app }),
   parts.loadFonts({
     options: {
-      name: '[name].[ext]'
+      name: '[name].[hash:8].[ext]'
     }
   }),
   parts.loadJavaScript({ include: PATHS.app })
@@ -52,13 +53,20 @@ const productionConfig = merge([
       hints: 'warning', // 'error' or false are valid too
       maxEntrypointSize: 100000, // in bytes
       maxAssetSize: 450000 // in bytes
-    }
+    },
+    output: {
+      chunkFilename: '[name].[chunkhash:8].js',
+      filename: '[name].[chunkhash:8].js'
+    },
+    plugins: [
+      new webpack.HashedModuleIdsPlugin(),
+    ]
   },
   parts.clean(PATHS.build),
   parts.setFreeVariable(
     'process.env.NODE_ENV',
     'production'
-  ),
+  ),  
   parts.minifyJavaScript(),
   parts.minifyCSS({
     options: {
@@ -77,7 +85,7 @@ const productionConfig = merge([
   parts.loadImages({
     options: {
       limit: 15000,
-      name: '[name].[ext]'
+      name: '[name].[hash:8].[ext]'
     }
   }),
   parts.minifyImages(),
