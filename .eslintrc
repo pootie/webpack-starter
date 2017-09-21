@@ -2,7 +2,9 @@
   "extends": [
       "eslint:recommended"
   ],
-  "plugins": [],
+  "plugins": [
+      "jest"
+  ],
   "parserOptions": {
       "ecmaVersion": 5,
       "sourceType": "module"
@@ -12,7 +14,8 @@
       "browser": true,
       "node": true,
       "jquery": true,
-      "mocha": true
+      "mocha": true,
+      "jest/globals": true
   },
   // 0 - off, 1 - warn, 2: error
   "rules": {
